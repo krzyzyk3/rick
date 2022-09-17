@@ -1,0 +1,20 @@
+targets:
+  $default:
+    sources:
+      - lib/**
+      - graphql/**
+    builders:
+      artemis:
+        options:
+          fragments_glob: graphql/fragments/**.graphql
+          schema_mapping:
+            - schema: graphql/schema.graphql
+              queries_glob: lib/**.graphql
+              output: lib/generated/graphql_api.dart
+              naming_scheme: pathedWithFields
+          custom_parser_import: "package:graphbrainz_example/coercers.dart"
+
+      json_serializable:
+        options:
+          field_rename: none # It has to be none, otherwise graphql won't work
+          include_if_null: false

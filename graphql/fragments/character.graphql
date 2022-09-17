@@ -1,0 +1,9 @@
+fragment Character on Character {
+    __typename
+    name
+    status
+    gender
+    image
+    id
+    species
+}
