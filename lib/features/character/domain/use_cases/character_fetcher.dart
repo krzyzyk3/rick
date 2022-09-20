@@ -15,56 +15,56 @@ class CharacterFetcher {
 
   CharacterFetcher(FetcherChange callback) : _stateChangedCallback = callback;
 
-  Future<void> fetch({CharacterFilter? filter, Duration? debounceDuration}) async {
-    if (filter != null && _filter != filter) _changeFilter(filter);
+  // If during fetch, another fetch is called, cancels the first one by returning without callback
+  Future<void> fetch({Duration? debounceDuration}) async {
     if (_items != null && _items!.hasMorePages == false) return;
 
+    int fetchID = _getNewFetchID();
     _stateChangedCallback(LoadState.loading, _items);
+
+    await _waitDebounce(debounceDuration);
+    if (_isFetchOutdated(fetchID)) return;
+
+    final repo = sl<CharacterRepository>();
+    int page = getNextPage();
+    final result = await repo.getCharacters(page: page, filter: _filter);
+    if (_isFetchOutdated(fetchID)) return;
+
+    result.bimap(
+      (failure) => _stateChangedCallback(LoadState.error, null),
+      (fetchedItems) {
+        _items = _items == null ? fetchedItems : _items!.merge(fetchedItems);
+        _stateChangedCallback(LoadState.data, _items);
+      },
+    );
+  }
+
+  void setFilter(CharacterFilter filter) {
+    if (filter != filter) {
+      _filter = filter;
+      _items = null;
+      _latestFetchID++;
+    }
+  }
+
+  int _getNewFetchID() {
     _latestFetchID++;
-    final fetchID = _latestFetchID;
+    return _latestFetchID; // Each fetch request gets unique fetchID, used for dismissing outdated fetches
+  }
 
-    if (debounceDuration != null) {
-      await Future.delayed(debounceDuration);
-      if (fetchID != _latestFetchID) return;
-    }
+  bool _isFetchOutdated(int fetchID) {
+    return fetchID != _latestFetchID;
+  }
 
-    if (_items == null) {
-      _fetchFirst(fetchID);
+  Future<void> _waitDebounce(Duration? duration) async {
+    if (duration != null) await Future.delayed(duration);
+  }
+
+  int getNextPage() {
+    if (_items != null) {
+      return _items!.currentPage + 1;
     } else {
-      _fetchMore(fetchID);
+      return 1;
     }
-  }
-
-  void _changeFilter(CharacterFilter filter) {
-    _filter = filter;
-    _items = null;
-  }
-
-  Future<void> _fetchFirst(int fetchID) async {
-    final repo = sl<CharacterRepository>();
-    final result = await repo.getCharacters(page: 1, filter: _filter);
-
-    if (_latestFetchID != fetchID) return;
-    result.bimap(
-      (l) => _stateChangedCallback(LoadState.error, null),
-      (r) {
-        _items = r;
-        _stateChangedCallback(LoadState.data, _items);
-      },
-    );
-  }
-
-  Future<void> _fetchMore(int fetchID) async {
-    final repo = sl<CharacterRepository>();
-    final result = await repo.getCharacters(page: _items!.currentPage + 1, filter: _filter);
-
-    if (_latestFetchID != fetchID) return;
-    result.bimap(
-      (l) => _stateChangedCallback(LoadState.error, _items),
-      (r) {
-        _items = _items!.merge(r);
-        _stateChangedCallback(LoadState.data, _items);
-      },
-    );
   }
 }

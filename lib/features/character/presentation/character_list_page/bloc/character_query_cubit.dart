@@ -17,7 +17,12 @@ class CharacterListCubit extends Cubit<CharacterListState> {
 
   CharacterListCubit() : super(CharacterListState.loading()) {
     fetcher = CharacterFetcher(_fetchCallback);
-    fetcher.fetch();
+    fetchMore(debounce: false);
+  }
+
+  void setFilter(CharacterFilter filter) {
+    fetcher.setFilter(filter);
+    fetchMore(debounce: true);
   }
 
   void fetchMore({bool debounce = false}) {
@@ -26,10 +31,6 @@ class CharacterListCubit extends Cubit<CharacterListState> {
     } else {
       fetcher.fetch();
     }
-  }
-
-  void setFilter(CharacterFilter filter) {
-    fetcher.fetch(filter: filter);
   }
 
   _fetchCallback(LoadState state, QueryItems<CharacterEntity>? data) {
