@@ -14,6 +14,12 @@ class CharacterFilter extends Equatable {
     this.gender,
   });
 
+  factory CharacterFilter.empty() => const CharacterFilter(
+        name: null,
+        characterStatus: null,
+        gender: null,
+      );
+
   FilterCharacter get graphqlFilter {
     return FilterCharacter(
       name: name,
