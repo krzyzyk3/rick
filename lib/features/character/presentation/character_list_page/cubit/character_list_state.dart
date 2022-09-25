@@ -1,7 +1,7 @@
-part of 'character_query_cubit.dart';
+part of '../cubit/character_list_cubit.dart';
 
 @freezed
-class CharacterListState with _$CharacterQueryState {
+class CharacterListState with _$CharacterListState {
   factory CharacterListState.data({
     required QueryItems<CharacterEntity> characters,
     required bool isLoading,

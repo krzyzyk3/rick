@@ -1,24 +1,24 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:rick/core/enums.dart';
 import 'package:rick/core/query_items.dart';
+import 'package:rick/dependencies.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';
 import 'package:rick/features/character/domain/model/character_filter.dart';
 import 'package:rick/features/character/domain/use_cases/character_fetcher.dart';
 
-part 'character_query_cubit.freezed.dart';
-part 'character_query_state.dart';
-
-enum LoadState { data, loading, error }
+part 'character_list_cubit.freezed.dart';
+part 'character_list_state.dart';
 
 const Duration debounceDuration = Duration(milliseconds: 200);
 
 class CharacterListCubit extends Cubit<CharacterListState> {
-  late final CharacterFetcher fetcher;
-
   CharacterListCubit() : super(CharacterListState.loading()) {
-    fetcher = CharacterFetcher(_fetchCallback);
+    fetcher = CharacterFetcher(fetcherStateCallback: _fetchCallback, characterRepository: sl());
     fetchMore(debounce: false);
   }
+
+  late final CharacterFetcher fetcher;
 
   void setFilter(CharacterFilter filter) {
     fetcher.setFilter(filter);
@@ -26,11 +26,7 @@ class CharacterListCubit extends Cubit<CharacterListState> {
   }
 
   void fetchMore({bool debounce = false}) {
-    if (debounce) {
-      fetcher.fetch(debounceDuration: debounceDuration);
-    } else {
-      fetcher.fetch();
-    }
+    fetcher.fetch(debounceDuration: debounce ? debounceDuration : null);
   }
 
   _fetchCallback(LoadState state, QueryItems<CharacterEntity>? data) {
