@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:get_it/get_it.dart';
 import 'package:rick/core/enums.dart';
 import 'package:rick/core/query_items.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';
@@ -6,26 +9,34 @@ import 'package:rick/features/character/domain/repository/character_repository.d
 
 typedef FetcherChange = Function(LoadState state, QueryItems<CharacterEntity>? data);
 
-class CharacterFetcher {
+class CharacterFetcherResult {
+  final LoadState state;
+  final QueryItems<CharacterEntity>? data;
+
+  CharacterFetcherResult({
+    required this.data,
+    required this.state,
+  });
+}
+
+class CharacterFetcher with Disposable {
   CharacterFetcher({
-    required FetcherChange fetcherStateCallback,
     required CharacterRepository characterRepository,
-  })  : _stateChangedCallback = fetcherStateCallback,
-        _characterRepository = characterRepository;
+  }) : _characterRepository = characterRepository;
 
   CharacterFilter _filter = CharacterFilter.empty();
   int _latestFetchID = 0;
   QueryItems<CharacterEntity>? _items;
-
-  final FetcherChange _stateChangedCallback;
   final CharacterRepository _characterRepository;
 
-  // If during fetch, another fetch is called, cancels the first one by returning without callback
+  final fetchStateStreamController = StreamController<CharacterFetcherResult>();
+
+  // If during fetch, another fetch is called, cancels the first one by returning without adding result to stream
   Future<void> fetch({Duration? debounceDuration}) async {
     if (_items != null && _items!.hasMorePages == false) return;
 
     final fetchID = _getNewFetchID();
-    _stateChangedCallback(LoadState.loading, _items);
+    _emitStreamEvent(state: LoadState.loading, data: _items);
 
     await _waitDebounce(debounceDuration);
     if (_isFetchOutdated(fetchID)) return;
@@ -35,10 +46,10 @@ class CharacterFetcher {
     if (_isFetchOutdated(fetchID)) return;
 
     result.bimap(
-      (failure) => _stateChangedCallback(LoadState.error, null),
+      (failure) => _emitStreamEvent(state: LoadState.error),
       (fetchedItems) {
         _items = _items == null ? fetchedItems : _items!.merge(fetchedItems);
-        _stateChangedCallback(LoadState.data, _items);
+        _emitStreamEvent(state: LoadState.data, data: _items);
       },
     );
   }
@@ -55,9 +66,18 @@ class CharacterFetcher {
 
   bool _isFetchOutdated(int fetchID) => fetchID != _latestFetchID;
 
+  void _emitStreamEvent({required LoadState state, QueryItems<CharacterEntity>? data}) {
+    fetchStateStreamController.add(CharacterFetcherResult(data: data, state: state));
+  }
+
   Future<void> _waitDebounce(Duration? duration) async {
     if (duration != null) await Future.delayed(duration);
   }
 
   int _getNextPageNumber() => (_items?.currentPage ?? 0) + 1;
+
+  @override
+  FutureOr onDispose() {
+    fetchStateStreamController.close();
+  }
 }
