@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick/dependencies.dart';
 import 'package:rick/features/character/presentation/character_list_page/cubit/character_list_cubit.dart';
+import 'package:rick/features/character/presentation/widgets/character_list_view.dart';
 
 class CharacterListPage extends StatelessWidget {
   const CharacterListPage({Key? key}) : super(key: key);
@@ -18,21 +19,10 @@ class CharacterListPage extends StatelessWidget {
                 loading: (_) => const Text("Loading"),
                 error: (_) => const Text("Error"),
                 data: (args) {
-                  return Column(
-                    children: [
-                      ElevatedButton(
-                        onPressed: context.read<CharacterListCubit>().fetchMore,
-                        child: const Text("Load more"),
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: args.characters.items.length,
-                          itemBuilder: (context, index) {
-                            return Text(args.characters.items[index].name);
-                          },
-                        ),
-                      ),
-                    ],
+                  return CharacterListView(
+                    characters: args.characters,
+                    isLoading: args.isLoading,
+                    onLoadMore: context.read<CharacterListCubit>().fetchMore,
                   );
                 },
               );
