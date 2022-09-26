@@ -4,12 +4,11 @@ import 'package:rick/core/query_items.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';
 import 'package:rick/features/character/domain/model/character_filter.dart';
 import 'package:rick/features/character/domain/repository/character_repository.dart';
-import 'package:rick/features/character/domain/repository/characters_query_result.dart';
 import 'package:rick/generated/graphql_api.graphql.dart';
 import 'package:rick/networking/graphql_network_manager.dart';
 
 class CharacterRepositoryImpl extends CharacterRepository {
-  CharacterRepositoryImpl({required networkManager}) : _networkManager = networkManager;
+  CharacterRepositoryImpl({required GraphqlNetworkManager networkManager}) : _networkManager = networkManager;
 
   final GraphqlNetworkManager _networkManager;
 

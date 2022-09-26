@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:rick/generated/graphql_api.graphql.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';
 

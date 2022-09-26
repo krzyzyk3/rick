@@ -4,15 +4,21 @@ import 'package:rick/features/character/domain/model/gender.dart';
 import 'package:rick/generated/graphql_api.graphql.dart';
 
 class CharacterFilter extends Equatable {
-  final String? name;
+  final String name;
   final CharacterStatus? characterStatus;
   final Gender? gender;
 
   const CharacterFilter({
-    this.name,
+    this.name = "",
     this.characterStatus,
     this.gender,
   });
+
+  factory CharacterFilter.empty() => const CharacterFilter(
+        name: "",
+        characterStatus: null,
+        gender: null,
+      );
 
   FilterCharacter get graphqlFilter {
     return FilterCharacter(

@@ -5,7 +5,6 @@ import 'package:rick/networking/dependencies.dart' as networking;
 final sl = GetIt.instance;
 
 Future<void> setupDependencies() async {
-  networking.setup();
-
-  character.setup();
+  await networking.setup();
+  await character.setup();
 }
