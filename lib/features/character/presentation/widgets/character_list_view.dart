@@ -4,16 +4,16 @@ import 'package:rick/features/character/domain/model/character_entity.dart';
 import 'package:rick/features/character/presentation/widgets/character_list_item.dart';
 
 class CharacterListView extends StatefulWidget {
-  final QueryItems<CharacterEntity> characters;
-  final bool isLoading;
-  final VoidCallback? onLoadMore;
-
   const CharacterListView({
     Key? key,
     required this.characters,
     required this.isLoading,
     this.onLoadMore,
   }) : super(key: key);
+
+  final QueryItems<CharacterEntity> characters;
+  final bool isLoading;
+  final VoidCallback? onLoadMore;
 
   @override
   State<CharacterListView> createState() => _CharacterListViewState();
