@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rick/core/pages/main_page.dart';
 import 'package:rick/features/character/presentation/character_list_page/character_list_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const CharacterListPage(),
+      home: const MainPage(),
     );
   }
 }
