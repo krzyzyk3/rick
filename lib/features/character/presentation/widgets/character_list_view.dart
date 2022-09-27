@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rick/core/query_items.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';
 import 'package:rick/features/character/presentation/widgets/character_list_item.dart';
 
@@ -8,11 +7,13 @@ class CharacterListView extends StatefulWidget {
     Key? key,
     required this.characters,
     required this.isLoading,
+    required this.hasMoreData,
     this.onLoadMore,
   }) : super(key: key);
 
-  final QueryItems<CharacterEntity> characters;
+  final List<CharacterEntity> characters;
   final bool isLoading;
+  final bool hasMoreData;
   final VoidCallback? onLoadMore;
 
   @override
@@ -22,7 +23,7 @@ class CharacterListView extends StatefulWidget {
 class _CharacterListViewState extends State<CharacterListView> {
   final ScrollController controller = ScrollController();
 
-  List<CharacterEntity> get characterList => widget.characters.items;
+  List<CharacterEntity> get characters => widget.characters;
 
   @override
   void initState() {
@@ -31,7 +32,7 @@ class _CharacterListViewState extends State<CharacterListView> {
   }
 
   void _onScrollChange() {
-    if (!controller.hasClients || widget.isLoading || !widget.characters.hasMorePages) return;
+    if (!controller.hasClients || widget.isLoading || !widget.hasMoreData) return;
 
     if (controller.position.pixels + 300 >= controller.position.maxScrollExtent) {
       widget.onLoadMore?.call();
@@ -39,29 +40,28 @@ class _CharacterListViewState extends State<CharacterListView> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    int itemCount = widget.isLoading ? characterList.length + 1 : characterList.length;
+    int itemCount = widget.isLoading ? characters.length + 1 : characters.length;
     return ListView.builder(
       itemCount: itemCount,
       controller: controller,
       itemBuilder: (context, index) {
-        if (index < characterList.length) {
-          return CharacterListItem(character: characterList[index]);
+        if (index < characters.length) {
+          return CharacterListItem(character: characters[index]);
         } else {
-          return const Center(
-            child: Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Text("Loading"),
-            ),
+          return Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(20.0),
+            child: const Text("Loading"),
           );
         }
       },
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    controller.dispose();
   }
 }

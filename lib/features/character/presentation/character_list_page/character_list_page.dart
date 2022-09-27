@@ -20,8 +20,9 @@ class CharacterListPage extends StatelessWidget {
                 error: (_) => const Text("Error"),
                 data: (args) {
                   return CharacterListView(
-                    characters: args.characters,
+                    characters: args.characters.items,
                     isLoading: args.isLoading,
+                    hasMoreData: args.characters.hasMorePages,
                     onLoadMore: context.read<CharacterListCubit>().fetchMore,
                   );
                 },
