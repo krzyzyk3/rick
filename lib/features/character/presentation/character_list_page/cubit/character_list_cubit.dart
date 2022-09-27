@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:rick/core/enums.dart';
 import 'package:rick/core/query_items.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';
@@ -11,15 +14,16 @@ part 'character_list_state.dart';
 
 const Duration debounceDuration = Duration(milliseconds: 200);
 
-class CharacterListCubit extends Cubit<CharacterListState> {
+class CharacterListCubit extends Cubit<CharacterListState> with Disposable {
   CharacterListCubit({required CharacterFetcher fetcher})
       : _fetcher = fetcher,
         super(CharacterListState.loading()) {
-    _fetcher.fetchStateStreamController.stream.listen(_onFetchStateChange);
+    streamSubscription = _fetcher.fetchStateStreamController.stream.listen(_onFetchStateChange);
     fetchMore(debounce: false);
   }
 
   late final CharacterFetcher _fetcher;
+  late final StreamSubscription streamSubscription;
 
   void setFilter(CharacterFilter filter) {
     _fetcher.setFilter(filter);
@@ -48,5 +52,10 @@ class CharacterListCubit extends Cubit<CharacterListState> {
         emit(CharacterListState.error());
         break;
     }
+  }
+
+  @override
+  FutureOr onDispose() {
+    streamSubscription.cancel();
   }
 }
