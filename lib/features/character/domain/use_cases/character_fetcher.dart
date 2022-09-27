@@ -29,7 +29,7 @@ class CharacterFetcher with Disposable {
   QueryItems<CharacterEntity>? _items;
   final CharacterRepository _characterRepository;
 
-  final fetchStateStreamController = StreamController<CharacterFetcherResult>();
+  final fetchStateStreamController = StreamController<CharacterFetcherResult>.broadcast();
 
   // If during fetch, another fetch is called, cancels the first one by returning without adding result to stream
   Future<void> fetch({Duration? debounceDuration}) async {

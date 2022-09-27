@@ -12,9 +12,7 @@ class CharacterListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {
-        print("${character.name} Pressed");
-      },
+      onPressed: () {},
       child: SizedBox(
         height: 90,
         child: Row(
