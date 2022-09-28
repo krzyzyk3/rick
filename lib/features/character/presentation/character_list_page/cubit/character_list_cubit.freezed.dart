@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of '../cubit/character_list_cubit.dart';
+part of 'character_list_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -18,7 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$CharacterListStateTearOff {
   const _$CharacterListStateTearOff();
 
-  Data data({required QueryItems<CharacterEntity> characters, required bool isLoading}) {
+  Data data(
+      {required QueryItems<CharacterEntity> characters,
+      required bool isLoading}) {
     return Data(
       characters: characters,
       isLoading: isLoading,
@@ -41,21 +43,25 @@ const $CharacterListState = _$CharacterListStateTearOff();
 mixin _$CharacterListState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(QueryItems<CharacterEntity> characters, bool isLoading) data,
+    required TResult Function(
+            QueryItems<CharacterEntity> characters, bool isLoading)
+        data,
     required TResult Function() loading,
     required TResult Function() error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)? data,
+    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)?
+        data,
     TResult Function()? loading,
     TResult Function()? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)? data,
+    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)?
+        data,
     TResult Function()? loading,
     TResult Function()? error,
     required TResult orElse(),
@@ -87,12 +93,14 @@ mixin _$CharacterListState {
 
 /// @nodoc
 abstract class $CharacterListStateCopyWith<$Res> {
-  factory $CharacterListStateCopyWith(CharacterListState value, $Res Function(CharacterListState) then) =
+  factory $CharacterListStateCopyWith(
+          CharacterListState value, $Res Function(CharacterListState) then) =
       _$CharacterListStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$CharacterListStateCopyWithImpl<$Res> implements $CharacterListStateCopyWith<$Res> {
+class _$CharacterListStateCopyWithImpl<$Res>
+    implements $CharacterListStateCopyWith<$Res> {
   _$CharacterListStateCopyWithImpl(this._value, this._then);
 
   final CharacterListState _value;
@@ -102,13 +110,16 @@ class _$CharacterListStateCopyWithImpl<$Res> implements $CharacterListStateCopyW
 
 /// @nodoc
 abstract class $DataCopyWith<$Res> {
-  factory $DataCopyWith(Data value, $Res Function(Data) then) = _$DataCopyWithImpl<$Res>;
+  factory $DataCopyWith(Data value, $Res Function(Data) then) =
+      _$DataCopyWithImpl<$Res>;
   $Res call({QueryItems<CharacterEntity> characters, bool isLoading});
 }
 
 /// @nodoc
-class _$DataCopyWithImpl<$Res> extends _$CharacterListStateCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
-  _$DataCopyWithImpl(Data _value, $Res Function(Data) _then) : super(_value, (v) => _then(v as Data));
+class _$DataCopyWithImpl<$Res> extends _$CharacterListStateCopyWithImpl<$Res>
+    implements $DataCopyWith<$Res> {
+  _$DataCopyWithImpl(Data _value, $Res Function(Data) _then)
+      : super(_value, (v) => _then(v as Data));
 
   @override
   Data get _value => super._value as Data;
@@ -151,22 +162,28 @@ class _$Data implements Data {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Data &&
-            const DeepCollectionEquality().equals(other.characters, characters) &&
+            const DeepCollectionEquality()
+                .equals(other.characters, characters) &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(characters), const DeepCollectionEquality().hash(isLoading));
+      runtimeType,
+      const DeepCollectionEquality().hash(characters),
+      const DeepCollectionEquality().hash(isLoading));
 
   @JsonKey(ignore: true)
   @override
-  $DataCopyWith<Data> get copyWith => _$DataCopyWithImpl<Data>(this, _$identity);
+  $DataCopyWith<Data> get copyWith =>
+      _$DataCopyWithImpl<Data>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(QueryItems<CharacterEntity> characters, bool isLoading) data,
+    required TResult Function(
+            QueryItems<CharacterEntity> characters, bool isLoading)
+        data,
     required TResult Function() loading,
     required TResult Function() error,
   }) {
@@ -176,7 +193,8 @@ class _$Data implements Data {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)? data,
+    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)?
+        data,
     TResult Function()? loading,
     TResult Function()? error,
   }) {
@@ -186,7 +204,8 @@ class _$Data implements Data {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)? data,
+    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)?
+        data,
     TResult Function()? loading,
     TResult Function()? error,
     required TResult orElse(),
@@ -233,7 +252,9 @@ class _$Data implements Data {
 }
 
 abstract class Data implements CharacterListState {
-  factory Data({required QueryItems<CharacterEntity> characters, required bool isLoading}) = _$Data;
+  factory Data(
+      {required QueryItems<CharacterEntity> characters,
+      required bool isLoading}) = _$Data;
 
   QueryItems<CharacterEntity> get characters;
   bool get isLoading;
@@ -243,12 +264,15 @@ abstract class Data implements CharacterListState {
 
 /// @nodoc
 abstract class $LoadingCopyWith<$Res> {
-  factory $LoadingCopyWith(Loading value, $Res Function(Loading) then) = _$LoadingCopyWithImpl<$Res>;
+  factory $LoadingCopyWith(Loading value, $Res Function(Loading) then) =
+      _$LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$LoadingCopyWithImpl<$Res> extends _$CharacterListStateCopyWithImpl<$Res> implements $LoadingCopyWith<$Res> {
-  _$LoadingCopyWithImpl(Loading _value, $Res Function(Loading) _then) : super(_value, (v) => _then(v as Loading));
+class _$LoadingCopyWithImpl<$Res> extends _$CharacterListStateCopyWithImpl<$Res>
+    implements $LoadingCopyWith<$Res> {
+  _$LoadingCopyWithImpl(Loading _value, $Res Function(Loading) _then)
+      : super(_value, (v) => _then(v as Loading));
 
   @override
   Loading get _value => super._value as Loading;
@@ -266,7 +290,8 @@ class _$Loading implements Loading {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is Loading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is Loading);
   }
 
   @override
@@ -275,7 +300,9 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(QueryItems<CharacterEntity> characters, bool isLoading) data,
+    required TResult Function(
+            QueryItems<CharacterEntity> characters, bool isLoading)
+        data,
     required TResult Function() loading,
     required TResult Function() error,
   }) {
@@ -285,7 +312,8 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)? data,
+    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)?
+        data,
     TResult Function()? loading,
     TResult Function()? error,
   }) {
@@ -295,7 +323,8 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)? data,
+    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)?
+        data,
     TResult Function()? loading,
     TResult Function()? error,
     required TResult orElse(),
@@ -347,12 +376,15 @@ abstract class Loading implements CharacterListState {
 
 /// @nodoc
 abstract class $ErrorCopyWith<$Res> {
-  factory $ErrorCopyWith(Error value, $Res Function(Error) then) = _$ErrorCopyWithImpl<$Res>;
+  factory $ErrorCopyWith(Error value, $Res Function(Error) then) =
+      _$ErrorCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> extends _$CharacterListStateCopyWithImpl<$Res> implements $ErrorCopyWith<$Res> {
-  _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then) : super(_value, (v) => _then(v as Error));
+class _$ErrorCopyWithImpl<$Res> extends _$CharacterListStateCopyWithImpl<$Res>
+    implements $ErrorCopyWith<$Res> {
+  _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
+      : super(_value, (v) => _then(v as Error));
 
   @override
   Error get _value => super._value as Error;
@@ -370,7 +402,8 @@ class _$Error implements Error {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is Error);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is Error);
   }
 
   @override
@@ -379,7 +412,9 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(QueryItems<CharacterEntity> characters, bool isLoading) data,
+    required TResult Function(
+            QueryItems<CharacterEntity> characters, bool isLoading)
+        data,
     required TResult Function() loading,
     required TResult Function() error,
   }) {
@@ -389,7 +424,8 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)? data,
+    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)?
+        data,
     TResult Function()? loading,
     TResult Function()? error,
   }) {
@@ -399,7 +435,8 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)? data,
+    TResult Function(QueryItems<CharacterEntity> characters, bool isLoading)?
+        data,
     TResult Function()? loading,
     TResult Function()? error,
     required TResult orElse(),

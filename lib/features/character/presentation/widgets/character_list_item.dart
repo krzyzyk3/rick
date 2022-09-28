@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';
+import 'package:rick/features/favorite/presentation/widgets/favorite_button.dart';
 
 class CharacterListItem extends StatelessWidget {
   final CharacterEntity character;
@@ -19,6 +20,12 @@ class CharacterListItem extends StatelessWidget {
           children: [
             Image.network(character.imgUrl),
             Text(character.name),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: FavoriteButton(character: character),
+              ),
+            ),
           ],
         ),
       ),
