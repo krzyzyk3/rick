@@ -15,7 +15,7 @@ class FavoriteRepoImpl with Disposable implements FavoriteRepo {
   StreamController<FavoriteChangedArgs> favoriteStream = StreamController.broadcast();
 
   @override
-  List<CharacterEntity> getAllFavoriteCharacters() => List<CharacterEntity>.from(_favorite.keys);
+  List<CharacterEntity> getAllFavoriteCharacters() => List<CharacterEntity>.from(_favorite.values);
 
   @override
   bool isFavorite(CharacterEntity character) => _favorite.containsKey(character.id);

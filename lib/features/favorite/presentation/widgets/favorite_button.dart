@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:rick/dependencies.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';
-import 'package:rick/features/favorite/domain/repository/favorite_repo.dart';
+import 'package:rick/features/favorite/presentation/cubit/favorite_cubit.dart';
 
-class FavoriteButton extends StatefulWidget {
+class FavoriteButton extends StatelessWidget {
   const FavoriteButton({
     Key? key,
     required this.character,
@@ -14,41 +12,22 @@ class FavoriteButton extends StatefulWidget {
   final CharacterEntity character;
 
   @override
-  State<FavoriteButton> createState() => _FavoriteButtonState();
-}
-
-class _FavoriteButtonState extends State<FavoriteButton> {
-  bool _isFavorite = false;
-  late final FavoriteRepo favoriteRepo;
-  late final StreamSubscription streamSubscription;
-
-  @override
-  void initState() {
-    super.initState();
-    favoriteRepo = sl();
-    _isFavorite = favoriteRepo.isFavorite(widget.character);
-    streamSubscription = favoriteRepo.favoriteStream.stream.listen(_onFavoriteChanged);
-  }
-
-  void _onFavoriteChanged(FavoriteChangedArgs args) {
-    if (args.characterID == widget.character.id) {
-      setState(() => _isFavorite = args.isFavorite);
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    streamSubscription.cancel();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => favoriteRepo.setFavorite(widget.character, !_isFavorite),
-      child: Builder(
-        builder: (context) {
-          return _isFavorite ? const Icon(Icons.star, size: 40) : const Icon(Icons.star_outline, size: 40);
+      onPressed: () => context.read<FavoriteCubit>().flipFavorite(character),
+      child: BlocBuilder<FavoriteCubit, List<CharacterEntity>>(
+        buildWhen: (lastCharacters, newCharacters) {
+          // Kinda bad, since FavoriteRepo sends info on which character got their favorite state changed
+          // so using contains here is suboptimal, but idk how to code it better
+          // I almost want to create another cubit, which would just notify about which character changed
+          return lastCharacters.contains(character) != newCharacters.contains(character);
+        },
+        builder: (context, characters) {
+          if (characters.contains(character)) {
+            return const Icon(Icons.star, size: 40);
+          } else {
+            return const Icon(Icons.star_outline, size: 40);
+          }
         },
       ),
     );
