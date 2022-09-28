@@ -8,7 +8,8 @@ import 'package:rick/features/favorite/domain/repository/favorite_repo.dart';
 class FavoriteCubit extends Cubit<List<CharacterEntity>> {
   FavoriteCubit({FavoriteRepo? repo}) : super([]) {
     _favoriteRepo = repo ?? sl();
-    _streamSubscription = _favoriteRepo.favoriteStream.stream.listen(_onFavoriteChanged);
+    _streamSubscription = _favoriteRepo.favoriteStream.listen(_onFavoriteChanged);
+    emit(_favoriteRepo.getAllFavoriteCharacters());
   }
 
   late final StreamSubscription _streamSubscription;

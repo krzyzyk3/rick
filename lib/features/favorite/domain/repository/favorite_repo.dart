@@ -15,7 +15,7 @@ class FavoriteChangedArgs {
 }
 
 abstract class FavoriteRepo {
-  StreamController<FavoriteChangedArgs> get favoriteStream;
+  Stream<FavoriteChangedArgs> get favoriteStream;
 
   List<CharacterEntity> getAllFavoriteCharacters();
 

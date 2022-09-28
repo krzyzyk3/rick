@@ -5,34 +5,45 @@ import 'package:rick/features/character/domain/model/character_entity.dart';
 import 'package:rick/features/favorite/domain/repository/favorite_repo.dart';
 
 class FavoriteRepoImpl with Disposable implements FavoriteRepo {
-  FavoriteRepoImpl(this._favorite) {
-    _subscription = _favorite.watch().listen(_onFavoriteChange);
+  FavoriteRepoImpl(this._favoriteBox) {
+    _boxStreamSubscription = _favoriteBox.watch().listen(_onFavoriteBoxChange);
   }
 
-  late final StreamSubscription _subscription;
-  final Box<CharacterEntity> _favorite;
+  final Box<CharacterEntity> _favoriteBox;
+  late final StreamSubscription _boxStreamSubscription;
+  final StreamController<FavoriteChangedArgs> _favoriteStreamController = StreamController.broadcast();
   @override
-  StreamController<FavoriteChangedArgs> favoriteStream = StreamController.broadcast();
+  Stream<FavoriteChangedArgs> get favoriteStream => _favoriteStreamController.stream;
 
   @override
-  List<CharacterEntity> getAllFavoriteCharacters() => List<CharacterEntity>.from(_favorite.values);
+  List<CharacterEntity> getAllFavoriteCharacters() => List<CharacterEntity>.from(_favoriteBox.values);
 
   @override
-  bool isFavorite(CharacterEntity character) => _favorite.containsKey(character.id);
+  bool isFavorite(CharacterEntity character) => _favoriteBox.containsKey(character.id);
 
   @override
   void setFavorite(CharacterEntity character, bool favorite) {
-    favorite ? _favorite.put(character.id, character) : _favorite.delete(character.id);
+    favorite ? _favoriteBox.put(character.id, character) : _favoriteBox.delete(character.id);
   }
 
-  void _onFavoriteChange(BoxEvent event) {
+  void _onFavoriteBoxChange(BoxEvent event) {
     if (event.deleted) {
-      favoriteStream.add(FavoriteChangedArgs(characterID: event.key, isFavorite: false));
+      _favoriteStreamController.add(FavoriteChangedArgs(
+        characterID: event.key,
+        isFavorite: false,
+      ));
     } else {
-      favoriteStream.add(FavoriteChangedArgs(characterID: event.key, isFavorite: true, character: event.value));
+      _favoriteStreamController.add(FavoriteChangedArgs(
+        characterID: event.key,
+        isFavorite: true,
+        character: event.value,
+      ));
     }
   }
 
   @override
-  FutureOr onDispose() => _subscription.cancel();
+  FutureOr onDispose() {
+    _favoriteStreamController.close();
+    _boxStreamSubscription.cancel();
+  }
 }

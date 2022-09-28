@@ -11,6 +11,8 @@ class FavoriteButton extends StatelessWidget {
 
   final CharacterEntity character;
 
+  static const double iconSize = 40;
+
   @override
   Widget build(BuildContext context) {
     return TextButton(
@@ -24,9 +26,9 @@ class FavoriteButton extends StatelessWidget {
         },
         builder: (context, characters) {
           if (characters.contains(character)) {
-            return const Icon(Icons.star, size: 40);
+            return const Icon(Icons.star, size: iconSize);
           } else {
-            return const Icon(Icons.star_outline, size: 40);
+            return const Icon(Icons.star_outline, size: iconSize);
           }
         },
       ),
