@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:rick/features/character/domain/model/character_status.dart';
-import 'package:rick/features/character/domain/model/gender.dart';
+import 'package:rick/features/character/domain/model/character_entity.dart';
 import 'package:rick/generated/graphql_api.graphql.dart';
 
 class CharacterFilter extends Equatable {

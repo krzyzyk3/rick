@@ -1,14 +1,29 @@
 import 'package:equatable/equatable.dart';
-import 'package:rick/features/character/domain/model/character_status.dart';
-import 'package:rick/features/character/domain/model/gender.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rick/generated/graphql_api.graphql.dart';
 
+part 'character_status.dart';
+part 'gender.dart';
+part 'character_entity.g.dart';
+
+@HiveType(typeId: 0)
 class CharacterEntity extends Equatable {
+  @HiveField(0)
   final String id;
+
+  @HiveField(1)
   final String name;
+
+  @HiveField(2)
   final CharacterStatus status;
+
+  @HiveField(3)
   final Gender gender;
+
+  @HiveField(4)
   final String imgUrl;
+
+  @HiveField(5)
   final String species;
 
   const CharacterEntity({

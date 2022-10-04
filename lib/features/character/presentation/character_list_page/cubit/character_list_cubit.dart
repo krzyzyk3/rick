@@ -14,7 +14,7 @@ part 'character_list_state.dart';
 
 const Duration debounceDuration = Duration(milliseconds: 200);
 
-class CharacterListCubit extends Cubit<CharacterListState> with Disposable {
+class CharacterListCubit extends Cubit<CharacterListState> {
   CharacterListCubit({required CharacterFetcher fetcher})
       : _fetcher = fetcher,
         super(CharacterListState.loading()) {
@@ -55,7 +55,8 @@ class CharacterListCubit extends Cubit<CharacterListState> with Disposable {
   }
 
   @override
-  FutureOr onDispose() {
+  Future<void> close() {
     streamSubscription.cancel();
+    return super.close();
   }
 }
