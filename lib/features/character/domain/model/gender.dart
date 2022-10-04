@@ -2,13 +2,13 @@ part of 'character_entity.dart';
 
 @HiveType(typeId: 2)
 enum Gender {
-  @HiveField(1)
+  @HiveField(0)
   male,
-  @HiveField(2)
+  @HiveField(1)
   female,
-  @HiveField(3)
+  @HiveField(2)
   genderless,
-  @HiveField(4)
+  @HiveField(3)
   unknown,
 }
 

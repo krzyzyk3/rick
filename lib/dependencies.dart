@@ -6,8 +6,8 @@ import 'package:rick/features/favorite/dependencies.dart' as favorite;
 final sl = GetIt.instance;
 
 Future<void> setupDependencies() async {
+  await networking.setup();
   await Future.wait([
-    networking.setup(),
     character.setup(),
     favorite.setup(),
   ]);

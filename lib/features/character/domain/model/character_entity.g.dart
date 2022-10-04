@@ -106,13 +106,13 @@ class GenderAdapter extends TypeAdapter<Gender> {
   @override
   Gender read(BinaryReader reader) {
     switch (reader.readByte()) {
-      case 1:
+      case 0:
         return Gender.male;
-      case 2:
+      case 1:
         return Gender.female;
-      case 3:
+      case 2:
         return Gender.genderless;
-      case 4:
+      case 3:
         return Gender.unknown;
       default:
         return Gender.male;
@@ -123,16 +123,16 @@ class GenderAdapter extends TypeAdapter<Gender> {
   void write(BinaryWriter writer, Gender obj) {
     switch (obj) {
       case Gender.male:
-        writer.writeByte(1);
+        writer.writeByte(0);
         break;
       case Gender.female:
-        writer.writeByte(2);
+        writer.writeByte(1);
         break;
       case Gender.genderless:
-        writer.writeByte(3);
+        writer.writeByte(2);
         break;
       case Gender.unknown:
-        writer.writeByte(4);
+        writer.writeByte(3);
         break;
     }
   }

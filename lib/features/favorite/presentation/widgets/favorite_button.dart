@@ -17,20 +17,14 @@ class FavoriteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () => context.read<FavoriteCubit>().flipFavorite(character),
-      child: BlocBuilder<FavoriteCubit, List<CharacterEntity>>(
+      child: BlocBuilder<FavoriteCubit, List<String>>(
         buildWhen: (lastCharacters, newCharacters) {
-          // Kinda bad, since FavoriteRepo sends info on which character got their favorite state changed
-          // so using contains here is suboptimal, but idk how to code it better
-          // I almost want to create another cubit, which would just notify about which character changed
-          return lastCharacters.contains(character) != newCharacters.contains(character);
+          return lastCharacters.contains(character.id) != newCharacters.contains(character.id);
         },
-        builder: (context, characters) {
-          if (characters.contains(character)) {
-            return const Icon(Icons.star, size: iconSize);
-          } else {
-            return const Icon(Icons.star_outline, size: iconSize);
-          }
-        },
+        builder: (_, characters) => Icon(
+          characters.contains(character.id) ? Icons.star : Icons.star_outline,
+          size: iconSize,
+        ),
       ),
     );
   }

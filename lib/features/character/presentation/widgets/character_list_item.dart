@@ -19,12 +19,10 @@ class CharacterListItem extends StatelessWidget {
         child: Row(
           children: [
             Image.network(character.imgUrl),
-            Text(character.name),
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: FavoriteButton(character: character),
-              ),
+            Expanded(child: Text(character.name)),
+            Align(
+              alignment: Alignment.centerRight,
+              child: FavoriteButton(character: character),
             ),
           ],
         ),

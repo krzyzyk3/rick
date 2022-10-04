@@ -1,31 +1,25 @@
 import 'dart:async';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rick/dependencies.dart';
+import 'package:bloc/bloc.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';
 import 'package:rick/features/favorite/domain/repository/favorite_repo.dart';
 
-class FavoriteCubit extends Cubit<List<CharacterEntity>> {
-  FavoriteCubit({FavoriteRepo? repo}) : super([]) {
-    _favoriteRepo = repo ?? sl();
-    _streamSubscription = _favoriteRepo.favoriteStream.listen(_onFavoriteChanged);
-    emit(_favoriteRepo.getAllFavoriteCharacters());
+// I'm unsure about List<String> as the state but it'll work for now
+class FavoriteCubit extends Cubit<List<String>> {
+  FavoriteCubit({required this.favoriteRepo}) : super([]) {
+    subscription = favoriteRepo.favoriteStream.listen(onFavoriteRepoChange);
+    emit(favoriteRepo.getAllFavoriteCharacters().map((e) => e.id).toList());
   }
 
-  late final StreamSubscription _streamSubscription;
-  late final FavoriteRepo _favoriteRepo;
+  final FavoriteRepo favoriteRepo;
+  late final StreamSubscription subscription;
 
-  void _onFavoriteChanged(FavoriteChangedArgs args) {
-    emit(_favoriteRepo.getAllFavoriteCharacters());
-  }
+  void onFavoriteRepoChange(List<CharacterEntity> newCharacters) => emit(newCharacters.map((e) => e.id).toList());
 
-  bool isFavorite(CharacterEntity character) => _favoriteRepo.isFavorite(character);
-
-  void flipFavorite(CharacterEntity character) => _favoriteRepo.setFavorite(character, !isFavorite(character));
+  void flipFavorite(CharacterEntity character) => favoriteRepo.flipFavorite(character);
 
   @override
   Future<void> close() {
-    _streamSubscription.cancel();
+    subscription.cancel();
     return super.close();
   }
 }

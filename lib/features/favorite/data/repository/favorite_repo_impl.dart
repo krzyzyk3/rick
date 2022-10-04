@@ -11,9 +11,9 @@ class FavoriteRepoImpl with Disposable implements FavoriteRepo {
 
   final Box<CharacterEntity> _favoriteBox;
   late final StreamSubscription _boxStreamSubscription;
-  final StreamController<FavoriteChangedArgs> _favoriteStreamController = StreamController.broadcast();
+  final StreamController<List<CharacterEntity>> _favoriteStreamController = StreamController.broadcast();
   @override
-  Stream<FavoriteChangedArgs> get favoriteStream => _favoriteStreamController.stream;
+  Stream<List<CharacterEntity>> get favoriteStream => _favoriteStreamController.stream;
 
   @override
   List<CharacterEntity> getAllFavoriteCharacters() => List<CharacterEntity>.from(_favoriteBox.values);
@@ -22,24 +22,11 @@ class FavoriteRepoImpl with Disposable implements FavoriteRepo {
   bool isFavorite(CharacterEntity character) => _favoriteBox.containsKey(character.id);
 
   @override
-  void setFavorite(CharacterEntity character, bool favorite) {
-    favorite ? _favoriteBox.put(character.id, character) : _favoriteBox.delete(character.id);
+  void flipFavorite(CharacterEntity character) {
+    isFavorite(character) ? _favoriteBox.delete(character.id) : _favoriteBox.put(character.id, character);
   }
 
-  void _onFavoriteBoxChange(BoxEvent event) {
-    if (event.deleted) {
-      _favoriteStreamController.add(FavoriteChangedArgs(
-        characterID: event.key,
-        isFavorite: false,
-      ));
-    } else {
-      _favoriteStreamController.add(FavoriteChangedArgs(
-        characterID: event.key,
-        isFavorite: true,
-        character: event.value,
-      ));
-    }
-  }
+  void _onFavoriteBoxChange(BoxEvent event) => _favoriteStreamController.add(getAllFavoriteCharacters());
 
   @override
   FutureOr onDispose() {
