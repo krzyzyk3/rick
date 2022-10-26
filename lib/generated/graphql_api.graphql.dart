@@ -16,6 +16,16 @@ mixin CharacterMixin {
   late String image;
   late String id;
   late String species;
+  CharacterMixin$Origin? origin;
+  CharacterMixin$Location? location;
+}
+mixin LocationMixin {
+  @JsonKey(name: '__typename')
+  String? $$typename;
+  String? id;
+  late String name;
+  String? type;
+  String? dimension;
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -47,7 +57,7 @@ class Characters$Query$Characters$Results extends JsonSerializable
 
   @override
   List<Object?> get props =>
-      [$$typename, name, status, gender, image, id, species];
+      [$$typename, name, status, gender, image, id, species, origin, location];
   @override
   Map<String, dynamic> toJson() =>
       _$Characters$Query$Characters$ResultsToJson(this);
@@ -83,6 +93,34 @@ class Characters$Query extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [characters];
   @override
   Map<String, dynamic> toJson() => _$Characters$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CharacterMixin$Origin extends JsonSerializable
+    with EquatableMixin, LocationMixin {
+  CharacterMixin$Origin();
+
+  factory CharacterMixin$Origin.fromJson(Map<String, dynamic> json) =>
+      _$CharacterMixin$OriginFromJson(json);
+
+  @override
+  List<Object?> get props => [$$typename, id, name, type, dimension];
+  @override
+  Map<String, dynamic> toJson() => _$CharacterMixin$OriginToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CharacterMixin$Location extends JsonSerializable
+    with EquatableMixin, LocationMixin {
+  CharacterMixin$Location();
+
+  factory CharacterMixin$Location.fromJson(Map<String, dynamic> json) =>
+      _$CharacterMixin$LocationFromJson(json);
+
+  @override
+  List<Object?> get props => [$$typename, id, name, type, dimension];
+  @override
+  Map<String, dynamic> toJson() => _$CharacterMixin$LocationToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -229,6 +267,62 @@ final CHARACTERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'species'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'origin'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'Location'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'Location'), directives: [])
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'Location'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(
+              name: NameNode(value: 'Location'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'dimension'),
             alias: null,
             arguments: [],
             directives: [],

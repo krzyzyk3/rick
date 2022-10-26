@@ -30,7 +30,7 @@ class GraphqlNetworkManager {
       return Right(parse(data));
     } catch (e, stack) {
       print(e);
-
+      print(stack);
       return Left(ServerFailure());
     }
   }

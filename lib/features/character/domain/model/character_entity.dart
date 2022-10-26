@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:rick/features/location/domain/model/location.dart';
 import 'package:rick/generated/graphql_api.graphql.dart';
 
 part 'character_status.dart';
@@ -26,6 +27,12 @@ class CharacterEntity extends Equatable {
   @HiveField(5)
   final String species;
 
+  @HiveField(6)
+  final Location lastLocation;
+
+  @HiveField(7)
+  final Location origin;
+
   const CharacterEntity({
     required this.id,
     required this.name,
@@ -33,6 +40,8 @@ class CharacterEntity extends Equatable {
     required this.gender,
     required this.imgUrl,
     required this.species,
+    required this.lastLocation,
+    required this.origin,
   });
 
   factory CharacterEntity.fromGraphql(CharacterMixin mixin) {
@@ -43,6 +52,8 @@ class CharacterEntity extends Equatable {
       gender: _graphqlGenderToGender(mixin.gender),
       imgUrl: mixin.image,
       species: mixin.species,
+      lastLocation: Location.fromGraphQL(mixin.location as LocationMixin),
+      origin: Location.fromGraphQL(mixin.origin as LocationMixin),
     );
   }
 

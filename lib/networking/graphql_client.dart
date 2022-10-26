@@ -8,11 +8,14 @@ import 'package:path_provider/path_provider.dart';
 Future<GraphQLClient> getClient() async {
   Directory appDocDirectory = await getApplicationDocumentsDirectory();
   final store = await HiveStore.open(path: appDocDirectory.path);
+  await store.reset();
+
   return GraphQLClient(
     link: DioLink(
       "https://rickandmortyapi.com/graphql",
       client: Dio(),
     ),
     cache: GraphQLCache(store: store),
+    //cache: GraphQLCache(store: null),
   );
 }
