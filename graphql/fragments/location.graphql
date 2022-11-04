@@ -1,0 +1,7 @@
+fragment Location on Location {
+    __typename
+    id
+    name
+    type
+    dimension
+}

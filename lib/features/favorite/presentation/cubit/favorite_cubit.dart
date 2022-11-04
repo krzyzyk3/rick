@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';
 import 'package:rick/features/favorite/domain/repository/favorite_repo.dart';
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rick/features/character/presentation/character_list_page/character_list_page.dart';
 import 'package:rick/features/favorite/presentation/pages/favorite_page.dart';
 
+// Should this be in core dir?
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 

@@ -6,4 +6,10 @@ fragment Character on Character {
     image
     id
     species
+    origin {
+        ...Location
+    }
+    location {
+        ...Location
+    }
 }

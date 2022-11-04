@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rick/core/navigation.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';
 import 'package:rick/features/favorite/presentation/widgets/favorite_button.dart';
 
@@ -13,7 +14,7 @@ class CharacterListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () => Navigator.pushNamed(context, RouteName.character, arguments: character),
       child: SizedBox(
         height: 90,
         child: Row(

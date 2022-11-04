@@ -23,13 +23,15 @@ class CharacterEntityAdapter extends TypeAdapter<CharacterEntity> {
       gender: fields[3] as Gender,
       imgUrl: fields[4] as String,
       species: fields[5] as String,
+      lastLocation: fields[6] as Location,
+      origin: fields[7] as Location,
     );
   }
 
   @override
   void write(BinaryWriter writer, CharacterEntity obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,7 +43,11 @@ class CharacterEntityAdapter extends TypeAdapter<CharacterEntity> {
       ..writeByte(4)
       ..write(obj.imgUrl)
       ..writeByte(5)
-      ..write(obj.species);
+      ..write(obj.species)
+      ..writeByte(6)
+      ..write(obj.lastLocation)
+      ..writeByte(7)
+      ..write(obj.origin);
   }
 
   @override

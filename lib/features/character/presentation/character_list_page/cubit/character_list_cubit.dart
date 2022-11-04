@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:get_it/get_it.dart';
 import 'package:rick/core/enums.dart';
 import 'package:rick/core/query_items.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';

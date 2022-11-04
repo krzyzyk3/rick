@@ -7,6 +7,7 @@ import 'package:rick/features/favorite/domain/repository/favorite_repo.dart';
 const String favoriteHiveBoxName = 'favorite';
 
 Future<void> setup() async {
+  await Hive.deleteBoxFromDisk(favoriteHiveBoxName);
   final box = await Hive.openBox<CharacterEntity>(favoriteHiveBoxName);
   sl.registerLazySingleton<FavoriteRepo>(() => FavoriteRepoImpl(box));
 }

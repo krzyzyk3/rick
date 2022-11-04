@@ -34,7 +34,15 @@ Characters$Query$Characters$Results
           ..gender = json['gender'] as String
           ..image = json['image'] as String
           ..id = json['id'] as String
-          ..species = json['species'] as String;
+          ..species = json['species'] as String
+          ..origin = json['origin'] == null
+              ? null
+              : CharacterMixin$Origin.fromJson(
+                  json['origin'] as Map<String, dynamic>)
+          ..location = json['location'] == null
+              ? null
+              : CharacterMixin$Location.fromJson(
+                  json['location'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$Characters$Query$Characters$ResultsToJson(
     Characters$Query$Characters$Results instance) {
@@ -53,6 +61,8 @@ Map<String, dynamic> _$Characters$Query$Characters$ResultsToJson(
   val['image'] = instance.image;
   val['id'] = instance.id;
   val['species'] = instance.species;
+  writeNotNull('origin', instance.origin?.toJson());
+  writeNotNull('location', instance.location?.toJson());
   return val;
 }
 
@@ -83,6 +93,60 @@ Map<String, dynamic> _$Characters$QueryToJson(Characters$Query instance) =>
       'characters': instance.characters.toJson(),
     };
 
+CharacterMixin$Origin _$CharacterMixin$OriginFromJson(
+        Map<String, dynamic> json) =>
+    CharacterMixin$Origin()
+      ..$$typename = json['__typename'] as String?
+      ..id = json['id'] as String?
+      ..name = json['name'] as String
+      ..type = json['type'] as String?
+      ..dimension = json['dimension'] as String?;
+
+Map<String, dynamic> _$CharacterMixin$OriginToJson(
+    CharacterMixin$Origin instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('__typename', instance.$$typename);
+  writeNotNull('id', instance.id);
+  val['name'] = instance.name;
+  writeNotNull('type', instance.type);
+  writeNotNull('dimension', instance.dimension);
+  return val;
+}
+
+CharacterMixin$Location _$CharacterMixin$LocationFromJson(
+        Map<String, dynamic> json) =>
+    CharacterMixin$Location()
+      ..$$typename = json['__typename'] as String?
+      ..id = json['id'] as String?
+      ..name = json['name'] as String
+      ..type = json['type'] as String?
+      ..dimension = json['dimension'] as String?;
+
+Map<String, dynamic> _$CharacterMixin$LocationToJson(
+    CharacterMixin$Location instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('__typename', instance.$$typename);
+  writeNotNull('id', instance.id);
+  val['name'] = instance.name;
+  writeNotNull('type', instance.type);
+  writeNotNull('dimension', instance.dimension);
+  return val;
+}
+
 FilterCharacter _$FilterCharacterFromJson(Map<String, dynamic> json) =>
     FilterCharacter(
       name: json['name'] as String?,
@@ -109,6 +173,70 @@ Map<String, dynamic> _$FilterCharacterToJson(FilterCharacter instance) {
   return val;
 }
 
+CharacterEpisodes$Query$Character$Episode
+    _$CharacterEpisodes$Query$Character$EpisodeFromJson(
+            Map<String, dynamic> json) =>
+        CharacterEpisodes$Query$Character$Episode()
+          ..$$typename = json['__typename'] as String?
+          ..id = json['id'] as String
+          ..name = json['name'] as String
+          ..airDate = json['air_date'] as String
+          ..episode = json['episode'] as String;
+
+Map<String, dynamic> _$CharacterEpisodes$Query$Character$EpisodeToJson(
+    CharacterEpisodes$Query$Character$Episode instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('__typename', instance.$$typename);
+  val['id'] = instance.id;
+  val['name'] = instance.name;
+  val['air_date'] = instance.airDate;
+  val['episode'] = instance.episode;
+  return val;
+}
+
+CharacterEpisodes$Query$Character _$CharacterEpisodes$Query$CharacterFromJson(
+        Map<String, dynamic> json) =>
+    CharacterEpisodes$Query$Character()
+      ..episode = (json['episode'] as List<dynamic>)
+          .map((e) => CharacterEpisodes$Query$Character$Episode.fromJson(
+              e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$CharacterEpisodes$Query$CharacterToJson(
+        CharacterEpisodes$Query$Character instance) =>
+    <String, dynamic>{
+      'episode': instance.episode.map((e) => e.toJson()).toList(),
+    };
+
+CharacterEpisodes$Query _$CharacterEpisodes$QueryFromJson(
+        Map<String, dynamic> json) =>
+    CharacterEpisodes$Query()
+      ..character = json['character'] == null
+          ? null
+          : CharacterEpisodes$Query$Character.fromJson(
+              json['character'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$CharacterEpisodes$QueryToJson(
+    CharacterEpisodes$Query instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('character', instance.character?.toJson());
+  return val;
+}
+
 CharactersArguments _$CharactersArgumentsFromJson(Map<String, dynamic> json) =>
     CharactersArguments(
       page: json['page'] as int?,
@@ -130,3 +258,15 @@ Map<String, dynamic> _$CharactersArgumentsToJson(CharactersArguments instance) {
   writeNotNull('filter', instance.filter?.toJson());
   return val;
 }
+
+CharacterEpisodesArguments _$CharacterEpisodesArgumentsFromJson(
+        Map<String, dynamic> json) =>
+    CharacterEpisodesArguments(
+      ID: json['ID'] as String,
+    );
+
+Map<String, dynamic> _$CharacterEpisodesArgumentsToJson(
+        CharacterEpisodesArguments instance) =>
+    <String, dynamic>{
+      'ID': instance.ID,
+    };
