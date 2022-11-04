@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rick/features/character/domain/model/character_entity.dart';
+import 'package:rick/features/episode/presentation/character_episode_list/character_episode_list.dart';
 
 class CharacterPage extends StatelessWidget {
   const CharacterPage({Key? key}) : super(key: key);
@@ -10,8 +11,7 @@ class CharacterPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(character.name)),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+      body: Column(
         children: [
           Image.network(character.imgUrl),
           Text(character.name),
@@ -19,7 +19,8 @@ class CharacterPage extends StatelessWidget {
           Text('Location: ${character.lastLocation.name}'),
           Text('Origin: ${character.origin.name}'),
           Text('Origin: ${character.origin.name}'),
-          Text('Episodes with ${character.name}:', style: TextStyle(fontSize: 20)),
+          Text('Episodes with ${character.name}:', style: const TextStyle(fontSize: 20)),
+          Expanded(child: CharacterEpisodeList(character: character)),
         ],
       ),
     );

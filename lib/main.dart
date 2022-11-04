@@ -6,5 +6,6 @@ import 'package:rick/dependencies.dart';
 Future<void> main() async {
   await Hive.initFlutter();
   await setupDependencies();
+
   runApp(const MyApp());
 }

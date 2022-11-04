@@ -9,6 +9,17 @@ part 'character_entity.g.dart';
 
 @HiveType(typeId: 0)
 class CharacterEntity extends Equatable {
+  const CharacterEntity({
+    required this.id,
+    required this.name,
+    required this.status,
+    required this.gender,
+    required this.imgUrl,
+    required this.species,
+    required this.lastLocation,
+    required this.origin,
+  });
+
   @HiveField(0)
   final String id;
 
@@ -32,17 +43,6 @@ class CharacterEntity extends Equatable {
 
   @HiveField(7)
   final Location origin;
-
-  const CharacterEntity({
-    required this.id,
-    required this.name,
-    required this.status,
-    required this.gender,
-    required this.imgUrl,
-    required this.species,
-    required this.lastLocation,
-    required this.origin,
-  });
 
   factory CharacterEntity.fromGraphql(CharacterMixin mixin) {
     return CharacterEntity(

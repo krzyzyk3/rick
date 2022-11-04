@@ -65,7 +65,7 @@ type Character {
     image: String!
 
     # Episodes in which this character appeared.
-    episode: [Episode]!
+    episode: [Episode!]!
 
     # Time at which the character was created in the database.
     created: String!
@@ -95,16 +95,16 @@ type Location {
 #
 type Episode {
     # The id of the episode.
-    id: ID
+    id: ID!
 
     # The name of the episode.
-    name: String
+    name: String!
 
     # The air date of the episode.
-    air_date: String
+    air_date: String!
 
     # The code of the episode.
-    episode: String
+    episode: String!
 
     # List of characters who have been seen in the episode.
     characters: [Character]!

@@ -3,6 +3,7 @@ import 'package:rick/generated/graphql_api.graphql.dart';
 
 part 'location.g.dart';
 
+// Could be moved to character feature if I don't use it later in any other way
 @HiveType(typeId: 3)
 class Location {
   Location(this.id, this.name, this.type, this.dimension);
